@@ -5,8 +5,8 @@ import Search from './component/search';
 function App() {
   return (
     <div className="App">
-      {/* <Stagaire/> */}
-      <Search/>
+      <Stagaire/>
+      {/* <Search/> */}
     </div>
   );
 }

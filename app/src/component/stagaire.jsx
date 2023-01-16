@@ -36,18 +36,7 @@ export default class Stagaire extends Component{
         })
     }
 
-    search = (e)=>{
-        var nom ={Nom:e.target.value}
-       axios.post("http://127.0.0.1:8000/api/index",nom)
-       .then(res=>{
-         this.setState({
-           message:res.data.message
-         })
-         console.log(res.data)
-       
-       })
-       
-       }
+    
 
 
 
@@ -93,13 +82,7 @@ export default class Stagaire extends Component{
     <div>
    
     </div>
-    <div className="App">
-      <input type="text" onChange={this.search} />
-      {this.state.message.map(value=>
-      <h1>{value.Nom} </h1>
-
-    )}
-    </div>
+   
            </div>
         )
     }
