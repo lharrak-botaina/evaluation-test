@@ -18,7 +18,10 @@ use App\Http\Controllers\WeatherController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('listLocation',[WeatherController::class,'listLocation']);
-Route::get('location/{id}',[WeatherController::class,'location']);
-Route::get('delete/{id}',[WeatherController::class,'Delete']);
-Route::post('addToFavorite',[WeatherController::class,'addToFavorite']);
+
+
+Route::any('/list',[WeatherController::class,'CityList']);
+Route::post('/save',[WeatherController::class,'SaveCity']);
+Route::post('/delete/{id}',[WeatherController::class,'DeleteCity']);
+
+

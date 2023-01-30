@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class weather extends Model
 {
     use HasFactory;
+    protected $table = 'weatherfavorite';
     protected $fillable=[
         "id",
         'name',
