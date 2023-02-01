@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::any('/list',[WeatherController::class,'CityList']);
 Route::post('/save',[WeatherController::class,'SaveCity']);
+Route::post('/checkCity',[WeatherController::class,'checkCity']);
 Route::post('/delete/{id}',[WeatherController::class,'DeleteCity']);
+Route::post('/DeleteCityName/{name}',[WeatherController::class,'DeleteCityName']);
 
 

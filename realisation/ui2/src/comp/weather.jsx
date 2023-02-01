@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import { AiFillHeart  } from "react-icons/ai";
 import '../App.css';
 export default class Weather extends React.Component {
 
@@ -30,6 +30,107 @@ constructor(props) {
     e.preventDefault()
     axios.get("https://api.openweathermap.org/data/2.5/weather?q="+this.state.value+"&appid=1253309e30b4fb953c136c1426565be0&units=metric")
     .then((res) => {
+
+      this.setState({
+        city: res.data.name,
+        temperature: res.data.main.temp,
+       country: res.data.sys.country,
+       weather:res.data.weather[0].main,
+       feels_like:res.data.main.feels_like,
+       humidity:res.data.main.humidity,
+       wind:res.data.wind.speed,
+      
+
+       
+    })
+    axios.post(' http://127.0.0.1:8000/api/checkCity?city='+this.state.value, {})
+    .then( (response)=> {
+      console.log(response.data.status)
+        if(response.data.status == "success"){
+
+          const btnSave = document.getElementById('btnSave')
+          btnSave.style.display="inline"
+          const btnDelete = document.getElementById('btnDelete')
+          btnDelete.style.display="none"
+        }
+        else{
+          const btnDelete = document.getElementById('btnDelete')
+          btnDelete.style.display="inline"
+          const btnSave = document.getElementById('btnSave')
+          btnSave.style.display="none"
+         
+        }
+      }
+    ) 
+  }
+   
+    
+    // console.log(res.data)
+    
+        );
+   
+   
+
+    
+  }
+  
+saveData = (city_name) => {
+    const save_city = city_name.city_name;
+
+    axios.post(' http://127.0.0.1:8000/api/save?city='+save_city, {})
+    .then( (response)=> 
+     this.setState({
+        save:response.data.saved
+      })
+    ) 
+    const btnSave = document.getElementById('btnSave')
+    btnSave.style.display="none"
+    const btnDelete = document.getElementById('btnDelete')
+    btnDelete.style.display="inline"
+  }
+
+  componentDidMount(){
+
+    axios.get('http://127.0.0.1:8000/api/list').then((res)=>{
+     this.setState({
+        save:res.data.saved
+      })
+      //  console.log(res.data.saved)
+    })
+
+  }
+  handleRemove=(id)=>{
+    // console.log(id)
+    axios.post('http://127.0.0.1:8000/api/delete/'+id).then((res)=>{
+     this.setState({
+        save:res.data.saved
+      })
+    console.log('ddd')
+      //  console.log(res.data.saved)
+    })
+
+    
+  }
+  handleDeleteFavorite=(name)=>{
+    // console.log(id)
+    axios.post('http://127.0.0.1:8000/api/DeleteCityName/'+name).then((res)=>{
+     this.setState({
+        save:res.data.saved
+      })
+    console.log('ddd')
+      //  console.log(res.data.saved)
+    const btnSave = document.getElementById('btnSave')
+    btnSave.style.display="inline"
+    const btnDelete = document.getElementById('btnDelete')
+    btnDelete.style.display="none"
+    })
+
+    
+  }
+  
+  handleShow(name) {
+    axios.get("https://api.openweathermap.org/data/2.5/weather?q="+name+"&appid=1253309e30b4fb953c136c1426565be0&units=metric")
+    .then((res) => {
       this.setState({
         city: res.data.name,
         temperature: res.data.main.temp,
@@ -42,7 +143,7 @@ constructor(props) {
        
     })
     
-    console.log(res.data)
+    // console.log(res.data)
     }
         );
    
@@ -50,24 +151,10 @@ constructor(props) {
 
     
   }
-  
-saveData = (city_name) => {
-    const save_city = city_name.city_name;
-    axios.post(' http://127.0.0.1:8000/api/save?city='+save_city, {}).then(function (response) {
-     console.log('Success!');
-    })}
 
-  componentDidMount(){
-
-    axios.get('http://127.0.0.1:8000/api/list').then((res)=>{
-     this.setState({
-        save:res.data.saved[0]
-      })
-       console.log(this.state.save[0])
-    })
-
-  }
   render() {
+      // console.log(this.state.save)
+
     // this.getData();
     const city_name = this.state.city
     return (
@@ -76,13 +163,12 @@ saveData = (city_name) => {
 <div className="app">
      
      <div className="container">
-       
        <div className="weather-side">
          <div className="weather-gradient"></div>
         
          <div><i class="fa-regular fa-bookmark"></i></div>
          <div className="date-container">
-     
+   
            <h1>{this.state.city}, <span className="location">{this.state.country}</span></h1>
            <h3 className="weather-desc">{this.state.weather}</h3>
      
@@ -109,7 +195,9 @@ saveData = (city_name) => {
           </label>
           <input className='submit' type="submit" value="Submit" />
         </form>
-        <button onClick={()=>this.saveData({city_name})}>save</button>
+     
+         <button onClick={()=>this.handleDeleteFavorite(city_name)} style={{display:"none"}} id="btnDelete"> -</button>
+        <button onClick={()=>this.saveData({city_name})} style={{display:"none"}} id="btnSave">  <AiFillHeart color="#FF0000" /></button>
            
             
          </div>
@@ -138,8 +226,8 @@ saveData = (city_name) => {
              <li><i className="day-icon" data-feather="cloud-snow"></i><span className="day-name">Thu</span><span className="day-temp">08°C</span></li>
              <li><i className="day-icon" data-feather="cloud-rain"></i><span className="day-name">Fry</span><span className="day-temp">19°C</span></li>
              <div className="clear"></div>
-           </ul>
-         </div> */}
+             </ul>
+            </div> */}
          
        </div>
      </div>
@@ -151,9 +239,14 @@ saveData = (city_name) => {
  <h3 class="Heading">saved cities</h3>
  <div>
   <ul>
-  {this.state.save.map((item)=>{
+  {this.state.save.map((item)=>
+  <div>
     <li value={item.id}>{item.name}</li>
-  })}
+    <button onClick={()=>this.handleRemove(item.id)} >-</button>
+    
+    <button onClick={()=>this.handleShow(item.name)} >show</button>
+    </div>
+  )}
     
     
   </ul>
