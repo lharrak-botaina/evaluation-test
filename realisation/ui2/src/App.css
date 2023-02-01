@@ -187,61 +187,14 @@ body {
 	float: right;
 }
 
-.week-list {
-	list-style-type: none;
-	padding: 0;
-	margin: 10px 35px;
-	-webkit-box-shadow: 0 0 50px -5px rgba(0, 0, 0, 0.25);
-	        box-shadow: 0 0 50px -5px rgba(0, 0, 0, 0.25);
-	border-radius: 10px;
-	
-}
 
-.week-list>li {
-	float: left;
-	padding: 15px;
-	cursor: pointer;
-	-webkit-transition: 200ms ease;
-	-o-transition: 200ms ease;
-	transition: 200ms ease;
-	border-radius: 10px;
-}
 
-.week-list>li:hover {
-	-webkit-transform: scale(1.1);
-	    -ms-transform: scale(1.1);
-	        transform: scale(1.1);
-	background: #fff;
-	color: #222831;
-	-webkit-box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
-	        box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2)
-}
 
-.week-list>li.active {
-	background: #fff;
-	color: #222831;
-	border-radius: 10px;
-}
 
-.week-list>li .day-name {
-	display: block;
-	margin: 10px 0 0 0;
-	text-align: center;
-}
 
-.week-list>li .day-icon {
-	display: block;
-	height: 30px;
-	width: auto;
-	margin: 0 auto;
-}
 
-.week-list>li .day-temp {
-	display: block;
-	text-align: center;
-	margin: 10px 0 0 0;
-	font-weight: 700;
-}
+
+
 
 .location-container {
 	padding: 25px 35px;
@@ -267,11 +220,7 @@ body {
 	
 }
 
-/* .location-button:hover {
-	-webkit-transform: scale(0.95);
-	    -ms-transform: scale(0.95);
-	        transform: scale(0.95);
-} */
+
 
 .location-input::placeholder {
  color: #ffffff;
@@ -286,17 +235,16 @@ body {
 	padding: 10px;
 	font-family: 'Montserrat', sans-serif;
 	background-color:#5151E5 ;
-	color: #000000;
+	color: #ffffff;
 	font-weight: 700;
 	
 	cursor: pointer;
 }
 .Cart-Container{
-	width:250px;
-	height: 300px;
-	background-color: #ffffff;
+	width:210px;
+	height: 400px;
+	background-color: #222831;
 	border-radius: 20px;
-	box-shadow: 0px 25px 40px #1687d933;
 	margin-left: 20px;
    }
    .Header{
@@ -311,22 +259,34 @@ body {
 	font-size: 20px;
 	font-family: ‘Open Sans’;
 	font-weight: 700;
-	color: #2F3841;
+	color: #ffffff;
+	margin-left: 30px;
    }
-   .Action{
-	font-size: 14px;
-	font-family: ‘Open Sans’;
-	font-weight: 600;
-	color: #E44C4C;
-	cursor: pointer;
-	border-bottom: 1px solid #E44C4C;
-   }
+  
    .all{
 	display: flex;
 	justify-content: space-around;
    }
-   #btnSave{
+   #btnSave,#btnDelete,#DeleteBtn{
 	background: unset;
 	border: unset;
-	/* width: 40px; */
+	
    }
+
+
+  .city{
+	width: 100px;
+	background-color: #5151E5 ;
+	border: none;
+	border-radius: 7px;
+	height: 30px;
+	color: #fff ;
+	font: bolder;
+  }
+ .list{
+	display: flex;
+
+ }
+ table{
+	margin-left: 40px;
+ }

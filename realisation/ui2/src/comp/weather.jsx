@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { AiFillHeart  } from "react-icons/ai";
+import { BsBookmarkDash,BsFillBookmarkDashFill  } from "react-icons/bs";
 import '../App.css';
 export default class Weather extends React.Component {
 
@@ -30,18 +30,14 @@ constructor(props) {
     e.preventDefault()
     axios.get("https://api.openweathermap.org/data/2.5/weather?q="+this.state.value+"&appid=1253309e30b4fb953c136c1426565be0&units=metric")
     .then((res) => {
-
       this.setState({
         city: res.data.name,
         temperature: res.data.main.temp,
-       country: res.data.sys.country,
-       weather:res.data.weather[0].main,
-       feels_like:res.data.main.feels_like,
-       humidity:res.data.main.humidity,
-       wind:res.data.wind.speed,
-      
-
-       
+        country: res.data.sys.country,
+        weather:res.data.weather[0].main,
+        feels_like:res.data.main.feels_like,
+        humidity:res.data.main.humidity,
+        wind:res.data.wind.speed,
     })
     axios.post(' http://127.0.0.1:8000/api/checkCity?city='+this.state.value, {})
     .then( (response)=> {
@@ -63,15 +59,8 @@ constructor(props) {
       }
     ) 
   }
-   
-    
     // console.log(res.data)
-    
         );
-   
-   
-
-    
   }
   
 saveData = (city_name) => {
@@ -105,7 +94,7 @@ saveData = (city_name) => {
      this.setState({
         save:res.data.saved
       })
-    console.log('ddd')
+   
       //  console.log(res.data.saved)
     })
 
@@ -117,7 +106,7 @@ saveData = (city_name) => {
      this.setState({
         save:res.data.saved
       })
-    console.log('ddd')
+   
       //  console.log(res.data.saved)
     const btnSave = document.getElementById('btnSave')
     btnSave.style.display="inline"
@@ -134,28 +123,20 @@ saveData = (city_name) => {
       this.setState({
         city: res.data.name,
         temperature: res.data.main.temp,
-       country: res.data.sys.country,
-       weather:res.data.weather[0].main,
-       feels_like:res.data.main.feels_like,
-       humidity:res.data.main.humidity,
-       wind:res.data.wind.speed
-
-       
+        country: res.data.sys.country,
+        weather:res.data.weather[0].main,
+        feels_like:res.data.main.feels_like,
+        humidity:res.data.main.humidity,
+        wind:res.data.wind.speed
     })
     
     // console.log(res.data)
     }
         );
-   
-   
-
-    
   }
 
   render() {
-      // console.log(this.state.save)
-
-    // this.getData();
+   
     const city_name = this.state.city
     return (
        
@@ -165,8 +146,6 @@ saveData = (city_name) => {
      <div className="container">
        <div className="weather-side">
          <div className="weather-gradient"></div>
-        
-         <div><i class="fa-regular fa-bookmark"></i></div>
          <div className="date-container">
    
            <h1>{this.state.city}, <span className="location">{this.state.country}</span></h1>
@@ -182,9 +161,7 @@ saveData = (city_name) => {
        </div>
        <div className="info-side">
          <div className="today-info-container">
-           <div className='bookmark'>
-          
-           </div>
+           
         
      
          <div className="location-container">
@@ -196,10 +173,14 @@ saveData = (city_name) => {
           <input className='submit' type="submit" value="Submit" />
         </form>
      
-         <button onClick={()=>this.handleDeleteFavorite(city_name)} style={{display:"none"}} id="btnDelete"> -</button>
-        <button onClick={()=>this.saveData({city_name})} style={{display:"none"}} id="btnSave">  <AiFillHeart color="#FF0000" /></button>
+            <button onClick={()=>this.handleDeleteFavorite(city_name)} style={{display:"none"}} id="btnDelete">
+                <BsFillBookmarkDashFill color="#ffbf00" size={30} />
+            </button>
+            <button onClick={()=>this.saveData({city_name})} style={{display:"none"}} id="btnSave"> 
+               <BsBookmarkDash color="#ffbf00" size={30} />
+            </button>
            
-            
+             
          </div>
            <div className="today-info">
              <div className="precipitation">
@@ -219,15 +200,7 @@ saveData = (city_name) => {
              </div>
            </div>
          </div>
-         {/* <div className="week-container">
-           <ul className="week-list">
-             <li className="active"><i className="day-icon" data-feather="sun"></i><span className="day-name">Tue</span><span className="day-temp">29°C</span></li>
-             <li><i className="day-icon" data-feather="cloud"></i><span className="day-name">Wed</span><span className="day-temp">21°C</span></li>
-             <li><i className="day-icon" data-feather="cloud-snow"></i><span className="day-name">Thu</span><span className="day-temp">08°C</span></li>
-             <li><i className="day-icon" data-feather="cloud-rain"></i><span className="day-name">Fry</span><span className="day-temp">19°C</span></li>
-             <div className="clear"></div>
-             </ul>
-            </div> */}
+         
          
        </div>
      </div>
@@ -236,26 +209,34 @@ saveData = (city_name) => {
          
  <div className="Cart-Container">
  <div class="Header">
- <h3 class="Heading">saved cities</h3>
+ <h3 class="Heading">Saved cities</h3>
+ </div>
  <div>
-  <ul>
-  {this.state.save.map((item)=>
-  <div>
-    <li value={item.id}>{item.name}</li>
-    <button onClick={()=>this.handleRemove(item.id)} >-</button>
+
+    <table>
+        <tbody>
+        {this.state.save.map((item)=>
+            <tr>
+                {/* <td value={item.id}>{item.name}</td> */}
+                <td className="list">
+                    <button className="city" onClick={()=>this.handleShow(item.name)} >{item.name}</button>
+                    <button onClick={()=>this.handleRemove(item.id)} id='DeleteBtn'><BsFillBookmarkDashFill color="#ffbf00" size={20}/></button>
+                
+                </td>
+            </tr>
+            )}
+        </tbody>
+    </table>
+
+
     
-    <button onClick={()=>this.handleShow(item.name)} >show</button>
-    </div>
-  )}
-    
-    
-  </ul>
+  
  </div>
  </div>
  </div>
 
 
-</div>
+
    
     );
   }
